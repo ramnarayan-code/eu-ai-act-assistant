@@ -1,0 +1,4 @@
+datasets 
+smolagents 
+langchain-community 
+rank_bm25

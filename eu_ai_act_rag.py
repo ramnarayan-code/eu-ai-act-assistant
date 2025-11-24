@@ -43,6 +43,7 @@ from ragas import SingleTurnSample, EvaluationDataset
 from ragas import evaluate
 from ragas.llms import LlamaIndexLLMWrapper
 
+
 # Traceloop.init()
 
 # Configure logging
@@ -50,6 +51,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
 
 class EUIActRAGSystem:
     """
@@ -152,6 +154,22 @@ class EUIActRAGSystem:
         # Create query engine
         self.query_engine = RetrieverQueryEngine.from_args(retriever, verbose=True)
         
+    def get_context(self, query: str) -> str:
+        """Retrieve context for a given query"""
+        try:
+            # Load and process the document
+            self.load_and_process_document(
+                persist_dir="./eu_ai_act_index"
+            )
+            context_response = self.query_engine.query(query)
+            return context_response.response
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            print(e)
+            print("Please check your OpenAI API key and file paths.")
+            return "Error retrieving context."
+    
     async def query(
         self, query: str, tools: list[BaseTool] = None
     ) -> str:
@@ -180,7 +198,8 @@ class EUIActRAGSystem:
 
         response = await agent.run(query)
 
-        results = self.evaluator.evaluate(query, response, context_nodes)
+        self.evaluator.evaluate(query, response, context_nodes)
+        
         return response
     
 class EUIActRAGSystemEvaluator:

@@ -239,7 +239,7 @@ class EUIActIndexer:
 def main():
     # Configuration
     PDF_PATH = "./data/eu_ai_act.pdf"  # Path to your EU AI Act PDF
-    PERSIST_DIR = "./eu_ai_act_index"  # Directory to save/load the index
+    PERSIST_DIR = "./eu_ai_act_index_test"  # Directory to save/load the index
 
     # Initialize the RAG system
     rag_system = EUIActIndexer(openai_api_key=OPENAI_API_KEY)

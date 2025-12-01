@@ -1,5 +1,6 @@
 import os
 import logging
+import traceback
 
 from typing import Optional
 
@@ -259,8 +260,6 @@ def main():
             "Please ensure you have the EU AI Act PDF file in the specified location."
         )
     except Exception as e:
-        import traceback
-
         traceback.print_exc()
         logger.error("Please check your OpenAI API key and file paths.")
 

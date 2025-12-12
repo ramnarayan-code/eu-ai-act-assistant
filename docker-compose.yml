@@ -1,24 +1,29 @@
 services:
-  backend:
+  mcp-server:
     build:
       context: ./backend
-    container_name: backend
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    networks:
-      - app-network
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - HOST=0.0.0.0
+      - PORT=8000
+    volumes:
+      - ./backend/eu_ai_act_index:/app/eu_ai_act_index
 
-  frontend:
+  rag-eu-agent:
     build:
       context: ./frontend
-    container_name: frontend
+      dockerfile: Dockerfile
     ports:
       - "7860:7860"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2:-true}
+      - LANGCHAIN_ENDPOINT=${LANGCHAIN_ENDPOINT:-https://eu.api.smith.langchain.com}
+      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
+      - LANGSMITH_PROJECT=${LANGSMITH_PROJECT}
+      - MCP_SERVER_URL=http://mcp-server:8000/mcp
     depends_on:
-      - backend
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+      - mcp-server

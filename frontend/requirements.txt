@@ -1,2 +1,6 @@
-gradio==5.25.0
-gradio-client==1.8.0
+gradio
+langchain[openai]
+langchain-mcp-adapters==0.1.14
+ragas
+llama-index
+llama-index-llms-openai

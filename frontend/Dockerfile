@@ -1,22 +1,17 @@
-# Use an official Python runtime as a parent image
-FROM python:3.10-slim
+FROM python:3.13-slim
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements file into the container
 COPY requirements.txt .
-
-# Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application files into the container
-COPY . .
+COPY gradio_agent.py .
+COPY rag_evaluator.py .
 
-# Expose the port Gradio runs on
+# Expose Gradio port
 EXPOSE 7860
 
+# Default environment variables
 ENV GRADIO_SERVER_NAME="0.0.0.0"
 
-# Command to run the Gradio app
-CMD ["python", "chatbot.py"]
+CMD ["python", "gradio_agent.py"]

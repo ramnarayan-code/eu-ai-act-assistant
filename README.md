@@ -1,4 +1,4 @@
-# RAG EU Agent
+# eu-ai-act-assistant
 
 A Retrieval-Augmented Generation (RAG) agent designed to answer questions about the EU AI Act using a local vector index and specific tools. The project consists of a frontend interface (Gradio) and a backend component providing tools via the Model Context Protocol (MCP).
 

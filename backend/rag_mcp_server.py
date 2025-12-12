@@ -24,5 +24,5 @@ def get_contextual_answer(query: str) -> str:
 if __name__ == "__main__":
     host = os.getenv("HOST", "127.0.0.1")
     port = int(os.getenv("PORT", 8000))
-    print(f"Starting MCP server for EU AI Act RAG system on {host}:{port}...")
+    logger.info(f"Starting MCP server for EU AI Act RAG system on {host}:{port}...")
     mcp.run(transport="http", host=host, port=port, path="/mcp")

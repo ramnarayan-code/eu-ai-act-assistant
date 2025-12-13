@@ -25,6 +25,7 @@ The project is split into two main components:
 
 - **Docker** and **Docker Compose** installed.
 - An **OpenAI API Key**.
+- (Optional but Recommended) **LangSmith API Key** for observability.
 
 ## Getting Started
 
@@ -33,6 +34,10 @@ The project is split into two main components:
 
     ```bash
     export OPENAI_API_KEY=your_api_key_here
+    
+    # Optional: Enable LangSmith Tracing
+    export LANGCHAIN_TRACING_V2=true
+    export LANGCHAIN_API_KEY=your_langsmith_key
     ```
 
 2.  **Run with Docker Compose**
@@ -57,6 +62,16 @@ The project is split into two main components:
     - The agent will use the `eu_ai_act_retriever` tool to find relevant context.
     - It will stream the answer back to you.
     - **Evaluation**: Shortly after the answer is complete, the "Evaluation Metrics" box below the chat will update with scores for the response's faithfulness and relevancy.
+
+## Observability with LangSmith
+
+This project is configured to use [LangSmith](https://smith.langchain.com/) for tracing and monitoring. This is extremely effective for:
+
+- **Tracing LLM Calls**: Inspect the exact inputs and outputs of every chain step.
+- **Debugging**: Quickly identify why an agent took a specific path or tool.
+- **Recording Evaluations**: View the RAG evaluations (Faithfulness/Relevancy) alongside the trace runs for comprehensive analysis.
+
+To enable it, simply set the `LANGCHAIN_TRACING_V2` and `LANGCHAIN_API_KEY` environment variables before running `docker-compose up`.
 
 ## Development
 

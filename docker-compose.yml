@@ -25,5 +25,6 @@ services:
       - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
       - LANGSMITH_PROJECT=${LANGSMITH_PROJECT}
       - MCP_SERVER_URL=http://mcp-server:8000/mcp
+      - SUPERMEMORY_API_KEY=${SUPERMEMORY_API_KEY}
     depends_on:
       - mcp-server

@@ -11,8 +11,8 @@ The project is split into two main components:
     - **Functionality**:
         - Interacts with the backend MCP server.
         - Uses LangChain for agentic logic.
-        - Provides a chat interface with a "LangChain Agent" persona.
-        - Includes an integrated **RAG Evaluator** (`rag_evaluator.py`) that scores answers for separate Faithfulness and Answer Relevancy metrics using `ragas`.
+        - **Intelligent Memory**: Integrated with **Supermemory** for persistent, semantic conversation memory and user profiles.
+        - **RAG Evaluator**: Integrated evaluator (`rag_evaluator.py`) that scores answers for Faithfulness and Answer Relevancy using `ragas`.
         - Supports non-blocking asynchronous evaluation.
     - **Configuration**: Uses `Dockerfile` to build the agent image.
 
@@ -25,20 +25,20 @@ The project is split into two main components:
 
 - **Docker** and **Docker Compose** installed.
 - An **OpenAI API Key**.
-- (Optional but Recommended) **LangSmith API Key** for observability.
+- A **Supermemory API Key** (optional but recommended for persistent memory).
 
 ## Getting Started
 
 1.  **Set Environment Variables**
-    Ensure your `OPENAI_API_KEY` is available in your shell environment, or set it in the `docker-compose.yml` file directly (not recommended for committed code).
+    Ensure your API keys are available in your shell environment, or set them in the `docker-compose.yml` file.
 
     ```bash
-    export OPENAI_API_KEY=your_api_key_here
-    
-    # Optional: Enable LangSmith Tracing
-    export LANGCHAIN_TRACING_V2=true
-    export LANGCHAIN_API_KEY=your_langsmith_key
+    export OPENAI_API_KEY=your_openai_key_here
+    export SUPERMEMORY_API_KEY=your_supermemory_key_here
     ```
+
+    > [!TIP]
+    > You can obtain a Supermemory API key from [console.supermemory.ai](https://console.supermemory.ai).
 
 2.  **Run with Docker Compose**
     Navigate to this directory and run:
@@ -60,18 +60,17 @@ The project is split into two main components:
 4.  **Usage**
     - Type your question about the EU AI Act in the chat box.
     - The agent will use the `eu_ai_act_retriever` tool to find relevant context.
-    - It will stream the answer back to you.
+    - **Memory**: The agent retrieves relevant context from past conversations via Supermemory to provide personalized answers.
     - **Evaluation**: Shortly after the answer is complete, the "Evaluation Metrics" box below the chat will update with scores for the response's faithfulness and relevancy.
 
-## Observability with LangSmith
+## Memory Management (Supermemory)
 
-This project is configured to use [LangSmith](https://smith.langchain.com/) for tracing and monitoring. This is extremely effective for:
+The assistant uses **Supermemory** to move beyond simple chat history. Instead of just remembering the last few messages, it:
+- **Indexes Conversations**: Every interaction is stored and semantically indexed.
+- **Semantic Retrieval**: Relevant context from any previous chat is retrieved based on your current question.
+- **User Profiles**: It builds a dynamic profile of your interests and previous queries to provide better assistance over time.
 
-- **Tracing LLM Calls**: Inspect the exact inputs and outputs of every chain step.
-- **Debugging**: Quickly identify why an agent took a specific path or tool.
-- **Recording Evaluations**: View the RAG evaluations (Faithfulness/Relevancy) alongside the trace runs for comprehensive analysis.
-
-To enable it, simply set the `LANGCHAIN_TRACING_V2` and `LANGCHAIN_API_KEY` environment variables before running `docker-compose up`.
+To disable memory, simply omit the `SUPERMEMORY_API_KEY`.
 
 ## Development
 

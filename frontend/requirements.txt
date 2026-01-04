@@ -4,3 +4,4 @@ langchain-mcp-adapters==0.1.14
 ragas
 llama-index
 llama-index-llms-openai
+supermemory

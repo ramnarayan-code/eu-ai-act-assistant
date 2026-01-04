@@ -11,9 +11,8 @@ The project is split into two main components:
     - **Functionality**:
         - Interacts with the backend MCP server.
         - Uses LangChain for agentic logic.
-        - **Intelligent Memory**: Integrated with **Supermemory** for persistent, semantic conversation memory and user profiles.
+        - **Intelligent Memory**: Integrated with **Supermemory** for persistent and semantic conversation memory.
         - **RAG Evaluator**: Integrated evaluator (`rag_evaluator.py`) that scores answers for Faithfulness and Answer Relevancy using `ragas`.
-        - Supports non-blocking asynchronous evaluation.
     - **Configuration**: Uses `Dockerfile` to build the agent image.
 
 - **Backend (`/backend`)**:
@@ -68,7 +67,6 @@ The project is split into two main components:
 The assistant uses **Supermemory** to move beyond simple chat history. Instead of just remembering the last few messages, it:
 - **Indexes Conversations**: Every interaction is stored and semantically indexed.
 - **Semantic Retrieval**: Relevant context from any previous chat is retrieved based on your current question.
-- **User Profiles**: It builds a dynamic profile of your interests and previous queries to provide better assistance over time.
 
 To disable memory, simply omit the `SUPERMEMORY_API_KEY`.
 
